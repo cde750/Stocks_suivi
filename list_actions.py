@@ -20,3 +20,8 @@ print(df.head())
 
 # Récupérer la liste des tickers
 tickers = df['Symbol'].tolist()
+
+# Afficher les tickers
+print("Liste des 500 tickers du S&P 500 :")
+for ticker in tickers:
+    print(ticker)
