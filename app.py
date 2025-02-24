@@ -28,12 +28,12 @@ def plot_ticker(ticker, period="5y", benchmark="^FCHI"):
         
         # Préparer les données du ticker
         data.index = pd.to_datetime(data.index).tz_localize(None)
-        data.columns = ["Open", "High", "Low", "Close", "Adj Close", "Volume"]
+        data.columns = ["Open", "High", "Low", "Close","Volume"]
         data["MA30"] = data["Close"].rolling(window=30).mean()
         
         # Préparer les données de l'indice de référence
         benchmark_data.index = pd.to_datetime(benchmark_data.index).tz_localize(None)
-        benchmark_data.columns = ["Open", "High", "Low", "Close", "Adj Close", "Volume"]
+        benchmark_data.columns = ["Open", "High", "Low", "Close", "Volume"]
 
         # Calculer le ratio entre le ticker et l'indice de référence
         data["Ratio"] = data["Close"] / benchmark_data["Close"]

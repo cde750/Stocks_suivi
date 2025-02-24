@@ -8,5 +8,5 @@ def get_cac40_tickers():
     return tickers
 
 # Exemple d'utilisation
-cac40_tickers = get_cac40_tickers()
-print(cac40_tickers)
+#cac40_tickers = get_cac40_tickers()
+#print(cac40_tickers)
