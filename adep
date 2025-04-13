@@ -1,0 +1,37 @@
+import pandas as pd
+
+# Charger les deux fichiers
+df1 = pd.read_excel("fichier_v1.xlsx")
+df2 = pd.read_excel("fichier_2.xlsx")
+
+# Fonction pour marquer les différences
+def marquer_diff(df_source, df_reference):
+    df = df_source.copy()
+    df['Diff'] = ''
+    
+    # Fusion pour retrouver les lignes correspondantes
+    merge_cols = ['C', 'D', 'E']
+    compare_cols = ['F', 'G']
+    
+    merged = pd.merge(df_source, df_reference, on=merge_cols, how='left', suffixes=('', '_ref'))
+
+    # Marquer 'x' si la ligne n’existe pas dans la référence
+    condition_absente = merged['F_ref'].isna() | merged['G_ref'].isna()
+    
+    # Marquer 'x' si F ou G sont différents
+    condition_diff = (merged['F'] != merged['F_ref']) | (merged['G'] != merged['G_ref'])
+
+    # Combinaison des deux cas
+    df['Diff'] = (condition_absente | condition_diff).apply(lambda x: 'x' if x else '')
+    
+    return df
+
+# Appliquer aux deux fichiers
+df1_result = marquer_diff(df1, df2)
+df2_result = marquer_diff(df2, df1)
+
+# Enregistrer les fichiers avec la colonne "Diff"
+df1_result.to_excel("fichier_v1_avec_diff.xlsx", index=False)
+df2_result.to_excel("fichier_2_avec_diff.xlsx", index=False)
+
+print("Comparaison terminée ! Les fichiers avec la colonne 'Diff' ont été enregistrés.")
